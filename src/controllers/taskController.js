@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { Card, List } from "../models/index.js";
+import { Task, List } from "../models/index.js";
 
 // Fonction pour aller chercher toute les tâches présentes en BDD
 export async function getAllTasks(req, res) {
@@ -10,7 +10,7 @@ export async function getAllTasks(req, res) {
 		],
 	});
 
-	res.status(200).json(cards);
+	res.status(200).json(task);
 }
 
 // Fonction pour aller chercher une tâche (par son identifiant présent dans la requête) en BDD
@@ -23,7 +23,7 @@ export async function getOneTask(req, res) {
 			.json({ error: "Task not found" });
 	}
 
-	res.status(200).json(card);
+	res.status(200).json(task);
 }
 
 // Fonction pour aller créer une tâche en BDD
@@ -52,7 +52,7 @@ export async function createTask(req, res) {
 	});
 
 	// Réponse
-	res.status(201).json(card);
+	res.status(201).json(task);
 }
 
 // Fonction pour aller mettre à jour une tâche (par son identifiant présent dans la requête) en BDD
@@ -97,7 +97,7 @@ export async function updateTask(req, res) {
 		id_list: req.body.id_list || taslk.id_list,
 	});
 
-	res.status(200).json(updatedCard);
+	res.status(200).json(updatedTask);
 }
 
 // Fonction pour aller supprimer une tâche (par son identifiant présent dans la requête) en BDD
@@ -118,7 +118,7 @@ export async function deleteTask(req, res) {
 	res.status(204).end();
 }
 
-export async function getAllCardsOfList(req, res) {
+export async function getAllTasksOfList(req, res) {
 	const listId = Number.parseInt(req.params.id);
 
 	const tasks = await Task.findAll({
@@ -126,7 +126,7 @@ export async function getAllCardsOfList(req, res) {
 		include: "labels",
 	});
 
-	res.status(200).json(cards);
+	res.status(200).json(tasks);
 }
 
 // Je réutilise une méthode montrée par le prof pour tester la validité d'une liste (DRY principle)
