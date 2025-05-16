@@ -94,7 +94,7 @@ export async function updateTask(req, res) {
 		title: req.body.title || task.title,
 		position: req.body.position || task.position,
 		color: req.body.color || task.color,
-		id_list: req.body.id_list || taslk.id_list,
+		id_list: req.body.id_list || task.id_list,
 	});
 
 	res.status(200).json(updatedTask);
