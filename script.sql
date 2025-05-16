@@ -1,0 +1,43 @@
+BEGIN;
+
+DROP TABLE IF EXISTS "list" CASCADE;
+DROP TABLE IF EXISTS "task" CASCADE;
+DROP TABLE IF EXISTS "label" CASCADE;
+DROP TABLE IF EXISTS "categorise" CASCADE;
+
+-- Table LIST
+CREATE TABLE IF NOT EXISTS "list" (
+  "id_list" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "name" TEXT NOT NULL,
+  "position" INTEGER NOT NULL
+);
+
+-- Table TASK
+CREATE TABLE IF NOT EXISTS "task" (
+  "id_task" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "title" TEXT NOT NULL,
+  "color" TEXT,
+  "position" INTEGER NOT NULL,
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "id_list" INTEGER NOT NULL,
+  CONSTRAINT fk_task_list FOREIGN KEY (id_list) REFERENCES list(id_list)
+);
+
+-- Table LABEL
+CREATE TABLE IF NOT EXISTS "label" (
+  "id_label" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "name" TEXT NOT NULL,
+  "color" TEXT
+);
+
+-- Table de liaison TASK <-> LABEL
+CREATE TABLE IF NOT EXISTS "categorise" (
+  "id_task" INTEGER NOT NULL,
+  "id_label" INTEGER NOT NULL,
+  PRIMARY KEY (id_task, id_label),
+  CONSTRAINT fk_categorise_task FOREIGN KEY (id_task) REFERENCES task(id_task) ON DELETE CASCADE,
+  CONSTRAINT fk_categorise_label FOREIGN KEY (id_label) REFERENCES label(id_label) ON DELETE CASCADE
+);
+
+COMMIT;
