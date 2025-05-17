@@ -102,10 +102,8 @@ export async function updateTask(req, res) {
 
 // Fonction pour aller supprimer une tâche (par son identifiant présent dans la requête) en BDD
 export async function deleteTask(req, res) {
-	// Parsing
 	const taskId = Number.parseInt(req.params.id);
 
-	// Traitement
 	const task = await Task.findByPk(taskId);
 	if (!task) {
 		return res
