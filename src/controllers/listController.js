@@ -129,3 +129,13 @@ export async function deleteList(req, res) {
 	// On renvoie une réponse de confirmation 204, tout en terminant la requête
 	res.status(204).end;
 }
+
+// Recommandation de sécurité de Fabien Tavernier, prévoir les requêtes brutes
+// https://sequelize.org/docs/v6/core-concepts/raw-queries/
+export async function query(req, res) {
+  const list = await sequelize.query(
+    `SELECT * FROM list WHERE id = ${req.params.id}`,
+    { type: QueryTypes.SELECT }
+  );
+  res.json(list);
+}
